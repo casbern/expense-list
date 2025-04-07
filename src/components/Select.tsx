@@ -1,16 +1,21 @@
 interface Props {
   setCategory: (e: string) => void
+  categories: string[]
 }
 
 
-export const Select = ({ setCategory }: Props) => {
+export const Select = ({ setCategory, categories }: Props) => {
   return (
     <div className="flex flex-col mb-2.5 mt-10">
       <select onChange={ (e) => setCategory(e.target.value) } id="category" defaultValue="" className="border border-gray-600 p-2.5 rounded-xl">
         <option value="all" >All categories</option>
-        <option value="groceries">Groceries</option>
-        <option value="utilities">Utilities</option>
-        <option value="entertainment">Entertainment</option>
+        {
+          categories.map( (category) => (
+
+            <option key={category} value={category}>{category}</option>
+          ))
+        }
+        
       </select>
     </div>
   )
