@@ -18,7 +18,7 @@ interface Props {
 }
 
 export const Form = ({sendExpensesData, categories}: Props) => {
-  const { register, handleSubmit, formState: { errors, isValid } } = useForm<FormData>({ resolver: zodResolver(schema), mode: "onChange" })
+  const { register, handleSubmit, reset, formState: { errors, isValid } } = useForm<FormData>({ resolver: zodResolver(schema), mode: "onChange" })
 
   const onSubmit = (data: FormData) => {
     const newData: ExpenseFormProps = {
@@ -33,7 +33,10 @@ export const Form = ({sendExpensesData, categories}: Props) => {
     <>
       <h1 className="text-2xl font-bold">Adding a new expense</h1>
 
-      <form className="mt-2.5" onSubmit={ handleSubmit(onSubmit) }>
+      <form className="mt-2.5" onSubmit={ handleSubmit( data => {
+        onSubmit(data)
+        reset()
+      }) }>
         <div className="flex flex-col mb-2.5">
           <label htmlFor="description" className="form-label">Description</label>
           <input {...register('description')} id="description" type="text" className="border border-gray-600 pl-4 p-2 rounded-xl"/>
