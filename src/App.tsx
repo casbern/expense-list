@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState } from "react"
 import { Form } from "./components/Form"
 import { ExpenseList } from "./components/ExpenseList"
-import { Select } from "./components/Select";
+import { Select } from "./components/Select"
 
 export interface ExpenseFormProps {
   id: number
@@ -18,8 +18,6 @@ function App() {
   
   const [category, setCategory] = useState<string>("all")
 
-  const categories = ["groceries", "utilities", "entertainment"]
-
   const filteredExpenses = category === "all" ? expensesData : expensesData.filter( expense => category === expense.category)
 
   const handleDelete = (id: number) => {
@@ -32,9 +30,9 @@ function App() {
     <div className=" min-h-screen bg-gray-100">
 
       <div className="w-2xl m-auto p-5 ">
-        <Form sendExpensesData={ sendExpensesData } categories={categories}/>
+        <Form sendExpensesData={ sendExpensesData }/>
 
-        <Select setCategory={setCategory} categories={categories}/>
+        <Select setCategory={setCategory}/>
 
         <ExpenseList expenses={ filteredExpenses } onDelete={ handleDelete }/>
       </div>

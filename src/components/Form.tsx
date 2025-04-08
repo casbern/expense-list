@@ -3,21 +3,21 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ExpenseFormProps } from "../App"
+import categories from "../data/categories"
 
 const schema = z.object({
   description: z.string().min(3, {message: "Description should have at least 3 characters."}).max(50),
   amount: z.number({ invalid_type_error: "Amout field must be filled."}).min(0.01, {message: "Amount must be greater than 0."}).max(100_000),
-  category: z.string().min(1, {message: "Please, select a category."})
+  category: z.enum(categories)
 })
 
 type FormData = z.infer<typeof schema>
 
 interface Props {
   sendExpensesData: (data: ExpenseFormProps) => void
-  categories: string[]
 }
 
-export const Form = ({sendExpensesData, categories}: Props) => {
+export const Form = ({sendExpensesData}: Props) => {
   const { register, handleSubmit, reset, formState: { errors, isValid } } = useForm<FormData>({ resolver: zodResolver(schema), mode: "onChange" })
 
   const onSubmit = (data: FormData) => {
